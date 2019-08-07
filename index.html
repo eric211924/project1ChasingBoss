@@ -94,7 +94,7 @@
         var imgObj = new Image();
         imgObj.src = "img/player.jpg";
 
-        context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
+        // context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
 
         var imgObj1 = new Image();
         imgObj1.src = "img/shy.jpg";
@@ -108,24 +108,34 @@
         var imgObj4 = new Image();
         imgObj4.src = "img/lose.jpg";
 
-        window.onload = function () {//換玩家
-            canvas2.addEventListener("mousedown",function(f){
+        var imgObj5 = new Image();
+        imgObj5.src = "img/player1.jpg";
 
+        var imgObj6 = new Image();
+        imgObj6.src = "img/player2.jpg";
+
+        var imgObj7 = new Image();
+        imgObj7.src = "img/player3.jpg";
+
+        window.onload = function () { //換玩家頭像
+            canvas2.addEventListener("mousedown", function (f) {
                 console.log(f.layerX);
                 console.log(f.layerY);
-            
-            if(f.layerX>45&&f.layerX<95&&f.layerY>380&&f.layerY<430){
-                console.log('123456');
-                imgObj.src = "img/lose.jpg";
-
-            }}
-            
-            
-            
-             , false);
+                if (f.layerX > 45 && f.layerX < 95 && f.layerY > 350 && f.layerY < 400) {
+                    imgObj.src = "img/player1.jpg";
+                }
+                if (f.layerX > 105 && f.layerX < 155 && f.layerY > 350 && f.layerY < 400) {
+                    imgObj.src = "img/player2.jpg";
+                }
+                if (f.layerX > 45 && f.layerX < 95 && f.layerY > 410 && f.layerY < 460) {
+                    imgObj.src = "img/player3.jpg";
+                }
+                if (f.layerX > 105 && f.layerX < 155 && f.layerY > 410 && f.layerY < 460) {
+                    imgObj.src = "img/player.jpg";
+                }
+                context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
+            }, false);
         }
-
-
 
         window.addEventListener('keydown', function (e) {
             console.log(e.keyCode);
@@ -249,12 +259,17 @@
                 context2.fillText(Math.floor(time / 5), 33, 280);
             }
 
-
-            context3.clearRect(280, 37, 70, 50)
+            window.onload = function(){
+                context3.clearRect(280, 37, 70, 50)
             context3.fillStyle = "black";
             context3.font = '60px Helvetica';
             context3.fillText(Math.floor(time / 5), 280, 80);
             time++;
+
+            }
+
+
+            
         }
 
 
@@ -367,7 +382,7 @@
         context2.fillStyle = "green";
         context2.font = '24px Helvetica';
         context2.fillText('Time', 75, 150);
-        context2.fillText('Time', 75, 355);
+        context2.fillText('Time', 75, 335);
 
         function draw() {
             for (var i = 0; i < 3; i++) {
@@ -390,15 +405,16 @@
             //     }
             // }
 
-            imgObj3.onload = function () {
-                context2.drawImage(imgObj3, 45, 380, 50, 50);
-                context2.drawImage(imgObj4, 105, 380, 50, 50);
+            imgObj5.onload = function () {
+                context2.drawImage(imgObj5, 45, 350, 50, 50);
+                context2.drawImage(imgObj6, 105, 350, 50, 50);
+                context2.drawImage(imgObj7, 45, 410, 50, 50);
+                context2.drawImage(imgObj, 105, 410, 50, 50);
             }
         }
         draw();
 
         //---------------
-
         let canvas3 = document.querySelector('#myCanvas3');
         let context3 = canvas3.getContext('2d');
 
@@ -428,8 +444,6 @@
                     context3.stroke();
                 }
             }
-
-
         }
         draw1();
     </script>
