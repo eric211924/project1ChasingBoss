@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        canvas {
+            border: 2px solid black;
+        }
+
+        #myCanvas1 {
+            background-color: black;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Microsoft JhengHei;
+        }
+
+        @media screen and (max-width: 1000px) {
+            #myCanvas {
+                display: none;
+            }
+
+            #myCanvas2 {
+                display: none;
+            }
+        }
+
+        @media screen and (min-width: 1000px) {
+            #myCanvas3 {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>魔王勇者來追我吧 </h1>
+
+    <div style="text-align: center">
+        <canvas id="myCanvas3" width="500px" height="120px"></canvas>
+        <canvas id="myCanvas" width="200px" height="500px"></canvas>
+        <canvas id="myCanvas1" width="500px" height="500px"></canvas>
+        <canvas id="myCanvas2" width="200px" height="500px"></canvas>
+
+    </div>
+
+    <script>
+        let canvas = document.querySelector('#myCanvas');
+        let context = canvas.getContext('2d');
+        // 彈回
+        for (i = 1; i < 8; i++) {
+            context.fillStyle = "rgba(" + 40 * i + ",50,0,0.8)";
+            context.fillRect(20 * i, 20 * i, 40, 40);
+        }
+        //彈回
+        for (i = 1; i < 7; i++) {
+            context.fillStyle = "rgba(255, " + 40 * i + ", 200, 0.9)"; //透明度  0.5
+            context.fillRect(140 - 20 * i, 160 + 20 * i, 40, 40);
+        }
+        //彈回
+        for (i = 1; i < 7; i++) {
+            context.fillStyle = "rgba(200, 200," + (200 - 40 * i) + ", 0.9)"; //透明度  0.5
+            context.fillRect(20 + 20 * i, 300 + 20 * i, 40, 40);
+        }
+        //---------------------------------------------------
+        let canvas1 = document.querySelector('#myCanvas1');
+        let context1 = canvas1.getContext('2d');
+
+        var player = {
+            X: 0,
+            Y: 0,
+
+            length: 50,
+            speed: 50
+        };
+
+        var boss = {
+            X: 250,
+            Y: 250,
+
+            length: 50,
+            speed: 50,
+
+            mode: 0,
+            moving: 0
+        };
+
+        var imgObj = new Image();
+        imgObj.src = "img/player.jpg";
+
+        context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
+
+        var imgObj1 = new Image();
+        imgObj1.src = "img/shy.jpg";
+
+        var imgObj2 = new Image();
+        imgObj2.src = "img/angry.jpg";
+
+        var imgObj3 = new Image();
+        imgObj3.src = "img/win.jpg";
+
+        var imgObj4 = new Image();
+        imgObj4.src = "img/lose.jpg";
+
+
+        window.addEventListener('keydown', function (e) {
+            console.log(e.keyCode);
+            switch (e.keyCode) {
+                case 40: //up
+                    player.Y = player.Y + player.speed;
+                    break;
+                case 37: //left
+                    player.X = player.X - player.speed;
+                    break;
+                case 39: //right
+                    player.X = player.X + player.speed;
+                    break;
+                case 38: //down
+                    player.Y = player.Y - player.speed;
+                    break;
+                case 27:
+                    if (pageNum == 2) {
+                        clearInterval(moving); //暫停
+                        pageNum = 3;
+                        page(pageNum);
+                    }
+                    break;
+                case 32:
+                    if (pageNum == 1) {
+                        player.X = 0; /// new game初始化
+                        player.Y = 0;
+                        boss.X = canvas1.width - boss.length;
+                        boss.Y = canvas1.height - boss.length;
+                        boss.mode = 0;
+                        time=0;
+
+                        context1.clearRect(0, 0, 500, 500);
+                        context1.drawImage(imgObj1, boss.X, boss.Y, boss.length, boss.length);
+
+                        moving = setInterval(screen, 200);
+                        pageNum = 2; //playing page
+                    }
+                    break;
+
+                case 13:
+                    moving = setInterval(screen, 200);
+                    pageNum = 2;
+                    break;
+            }
+            if (player.X < 0) //player不要跑出去
+                player.X = 0;
+            if (player.Y < 0)
+                player.Y = 0;
+            if (player.X == canvas1.width)
+                player.X = player.X - player.length;
+            if (player.Y == canvas1.height)
+                player.Y = player.Y - player.length;
+            e.preventDefault();
+        }, false);
+
+
+        function moveBoss() {
+            boss.moving = Math.floor(Math.random() * 4)
+            switch (boss.moving) {
+                case 0: //up
+                    boss.Y = boss.Y + boss.speed;
+                    break;
+                case 1: //left
+                    boss.X = boss.X - boss.speed;
+                    break;
+                case 2: //right
+                    boss.X = boss.X + boss.speed;
+                    break;
+                case 3: //down
+                    boss.Y = boss.Y - boss.speed;
+                    break;
+            }
+            if (boss.X < 0) //boss不要跑出去
+                boss.X = 0;
+            if (boss.Y < 0)
+                boss.Y = 0;
+            if (boss.X == canvas1.width)
+                boss.X = boss.X - boss.length;
+            if (boss.Y == canvas1.width)
+                boss.Y = boss.Y - boss.length;
+        }
+
+        var time = 1;
+
+        function screen() {
+            context1.clearRect(0, 0, 500, 500);
+            context1.shadowColor = "black";
+
+            context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
+
+            if (boss.mode < 10) {
+                context1.drawImage(imgObj1, boss.X, boss.Y, boss.length, boss.length);
+            } else {
+                context1.drawImage(imgObj2, boss.X, boss.Y, boss.length, boss.length);
+            }
+            boss.mode++;
+            if (boss.mode == 20)
+                boss.mode = 0;
+
+            moveBoss();
+
+            // if (player.X == boss.X && player.Y == boss.Y) {
+            //     console.log('touch');
+            //     clearInterval(moving);
+            //     page(pageNum);
+            //     pageNum = 1;
+            // }
+
+            if (player.X >= boss.X - 50 && player.X <= boss.X + 50 && player.Y >= boss.Y - 50 && player.Y <= boss.Y +
+                50) {
+                console.log('touch');
+                clearInterval(moving);
+                page(pageNum);
+                pageNum = 1;
+            }
+
+            context2.clearRect(60, 210, 100, 170)
+            context2.fillStyle = "black";
+            context2.font = '60px Helvetica';
+            context2.fillText(Math.floor(time / 5), 63, 260);
+
+            context3.clearRect(280, 37, 100, 50)
+            context3.fillStyle = "black";
+            context3.font = '60px Helvetica';
+            context3.fillText(Math.floor(time / 5), 280, 80);
+            time++;
+        }
+
+        function page(evt) {
+            context1.clearRect(0, 0, canvas.width, canvas.height);
+            context1.fillStyle = "white";
+            context1.font = '24px Helvetica';
+            context1.shadowOffsetX = 3;
+            context1.shadowOffsetY = 3;
+            context1.shadowColor = "white";
+            context1.shadowBlur = 10;
+
+            if (evt == 1) { //開始頁
+                context1.fillText('press Space to start', 143, 80);
+                context1.fillText('press ESC to pause', 143, 180);
+                context1.fillText('press Enter to continue', 128, 280);
+                context1.fillText('When Enemy status is           => Escape', 30, 380);
+                context1.fillText('When Enemy status is  Shy   => Approach', 30, 420);
+                imgObj1.onload=function(){
+                     context1.drawImage(imgObj1, 280, 400, 50, 50);
+                     context1.drawImage(imgObj2, 280, 340, 50, 50);
+                }
+               
+               
+
+            }
+
+            if (evt == 2) { //結束頁
+                if (boss.mode < 10) {
+                    context1.drawImage(imgObj3, 80, 220, 340, 260);
+                    context1.fillText('Congratulations', 170, 80);
+                } else {
+                    context1.drawImage(imgObj4, 80, 220, 340, 260);
+                    context1.fillText('GAME OVER', 180, 80);
+                }
+                context1.fillText('press Space to try again', 120, 180);
+            }
+
+            if (evt == 3) { //暫停頁
+                context1.fillText('press Enter to back', 160, 80);
+            }
+            var array1 = [
+                [100, 50],
+                [400, 50],
+                [400, 100],
+                [100, 100]
+            ]
+            context1.beginPath();
+            context1.moveTo(array1[0][0], array1[0][1]);
+            context1.lineWidth = 2;
+            for (i = 1; i <= array1.length - 1; i++) {
+                context1.lineTo(array1[i][0], array1[i][1])
+            }
+            context1.closePath();
+            context1.strokeStyle = "#ddddff";
+            context1.lineWidth = 3;
+
+            if (evt == 1 || evt == 3) {
+
+                context1.stroke();
+            }
+
+
+            var array2 = [
+                [100, 150],
+                [400, 150],
+                [400, 200],
+                [100, 200]
+            ]
+            context1.beginPath();
+            context1.moveTo(array2[0][0], array2[0][1]);
+            context1.lineWidth = 2;
+            for (i = 1; i <= array1.length - 1; i++) {
+                context1.lineTo(array2[i][0], array2[i][1])
+            }
+            context1.closePath();
+            context1.strokeStyle = "#bbffff";
+            context1.lineWidth = 3;
+            if (evt == 1 || evt == 2) {
+
+                context1.stroke();
+            }
+
+            var array3 = [
+                [100, 250],
+                [400, 250],
+                [400, 300],
+                [100, 300]
+            ]
+            context1.beginPath();
+            context1.moveTo(array3[0][0], array3[0][1]);
+            context1.lineWidth = 2;
+            for (i = 1; i <= array1.length - 1; i++) {
+                context1.lineTo(array3[i][0], array3[i][1])
+            }
+            context1.closePath();
+            context1.strokeStyle = "#ffbd9d";
+            context1.lineWidth = 3;
+            if (evt == 1) {
+
+                context1.stroke();
+            }
+        }
+
+        var pageNum = 1;
+        page(pageNum);
+        //------------------------------------
+        let canvas2 = document.querySelector('#myCanvas2');
+        let context2 = canvas2.getContext('2d');
+
+        context2.fillRect(10, 10, 180, 480);
+        context2.clearRect(20, 20, 160, 460);
+        context2.strokeRect(30, 30, 140, 440);
+        context2.fillStyle = "green";
+        context2.font = '48px Helvetica';
+        context2.fillText('Time', 50, 200);
+
+        //---------------
+
+        let canvas3 = document.querySelector('#myCanvas3');
+        let context3 = canvas3.getContext('2d');
+        context3.fillRect(10, 10, 480, 100);
+        context3.clearRect(20, 20, 460, 80);
+        context3.strokeRect(30, 30, 440, 60);
+        context3.fillStyle = "green";
+        context3.font = '48px Helvetica';
+        context3.fillText('Time', 100, 80);
+    </script>
+
+</body>
+
+</html>
