@@ -129,6 +129,9 @@
                         clearInterval(moving); //暫停
                         pageNum = 3;
                         page(pageNum);
+                        context1.shadowColor = "black";
+
+                        context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
                     }
                     break;
                 case 32:
@@ -138,7 +141,7 @@
                         boss.X = canvas1.width - boss.length;
                         boss.Y = canvas1.height - boss.length;
                         boss.mode = 0;
-                        time=0;
+                        time = 0;
 
                         context1.clearRect(0, 0, 500, 500);
                         context1.drawImage(imgObj1, boss.X, boss.Y, boss.length, boss.length);
@@ -210,13 +213,6 @@
 
             moveBoss();
 
-            // if (player.X == boss.X && player.Y == boss.Y) {
-            //     console.log('touch');
-            //     clearInterval(moving);
-            //     page(pageNum);
-            //     pageNum = 1;
-            // }
-
             if (player.X >= boss.X - 50 && player.X <= boss.X + 50 && player.Y >= boss.Y - 50 && player.Y <= boss.Y +
                 50) {
                 console.log('touch');
@@ -225,17 +221,18 @@
                 pageNum = 1;
             }
 
-            context2.clearRect(60, 210, 100, 170)
+            context2.clearRect(33, 180, 130, 110);
             context2.fillStyle = "black";
-            context2.font = '60px Helvetica';
-            context2.fillText(Math.floor(time / 5), 63, 260);
+            context2.font = '120px Helvetica';
+            context2.fillText(Math.floor(time / 5), 33, 280);
 
-            context3.clearRect(280, 37, 100, 50)
+            context3.clearRect(280, 37, 70, 50)
             context3.fillStyle = "black";
             context3.font = '60px Helvetica';
             context3.fillText(Math.floor(time / 5), 280, 80);
             time++;
         }
+
 
         function page(evt) {
             context1.clearRect(0, 0, canvas.width, canvas.height);
@@ -252,12 +249,12 @@
                 context1.fillText('press Enter to continue', 128, 280);
                 context1.fillText('When Enemy status is           => Escape', 30, 380);
                 context1.fillText('When Enemy status is  Shy   => Approach', 30, 420);
-                imgObj1.onload=function(){
-                     context1.drawImage(imgObj1, 280, 400, 50, 50);
-                     context1.drawImage(imgObj2, 280, 340, 50, 50);
+                imgObj1.onload = function () {
+                    context1.drawImage(imgObj1, 280, 400, 50, 50);
+                    context1.drawImage(imgObj2, 280, 340, 50, 50);
                 }
-               
-               
+
+
 
             }
 
@@ -292,10 +289,8 @@
             context1.lineWidth = 3;
 
             if (evt == 1 || evt == 3) {
-
                 context1.stroke();
             }
-
 
             var array2 = [
                 [100, 150],
@@ -313,7 +308,6 @@
             context1.strokeStyle = "#bbffff";
             context1.lineWidth = 3;
             if (evt == 1 || evt == 2) {
-
                 context1.stroke();
             }
 
@@ -333,7 +327,6 @@
             context1.strokeStyle = "#ffbd9d";
             context1.lineWidth = 3;
             if (evt == 1) {
-
                 context1.stroke();
             }
         }
@@ -348,8 +341,32 @@
         context2.clearRect(20, 20, 160, 460);
         context2.strokeRect(30, 30, 140, 440);
         context2.fillStyle = "green";
-        context2.font = '48px Helvetica';
-        context2.fillText('Time', 50, 200);
+        context2.font = '24px Helvetica';
+        context2.fillText('Time', 75, 150);
+        context2.fillText('Time', 75, 355);
+
+        function draw() {
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 5; j++) {
+                    context2.strokeStyle = 'rgb(0,' + Math.floor(255 - 42.5 * i) + ',' +
+                        Math.floor(255 - 42.5 * j) + ')';
+                    context2.beginPath();
+                    context2.arc(50 + j * 25, 60 + i * 25, 10, 0, Math.PI * 2, true);
+                    context2.stroke();
+                }
+            }
+
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 5; j++) {
+                    context2.strokeStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ',' +
+                        Math.floor(255 - 42.5 * j) + ',0)';
+                    context2.beginPath();
+                    context2.arc(50 + j * 25, 380 + i * 25, 10, 0, Math.PI * 2, true);
+                    context2.stroke();
+                }
+            }
+        }
+        draw();
 
         //---------------
 
@@ -359,8 +376,30 @@
         context3.clearRect(20, 20, 460, 80);
         context3.strokeRect(30, 30, 440, 60);
         context3.fillStyle = "green";
-        context3.font = '48px Helvetica';
-        context3.fillText('Time', 100, 80);
+        context3.font = '36px Helvetica';
+        context3.fillText('Time', 170, 75);
+
+        function draw1(){
+            for (var i = 0; i < 2; i++) {
+                for (var j = 0; j < 4; j++) {
+                    context3.strokeStyle = 'rgb(0,' + Math.floor(255 - 42.5 * i) + ',' +
+                        Math.floor(255 - 42.5 * j) + ')';
+                    context3.beginPath();
+                    context3.arc(50 + j * 25, 48 + i * 25, 10, 0, Math.PI * 2, true);
+                    context3.stroke();
+                }
+            }
+            for (var i = 0; i < 2; i++) {
+                for (var j = 0; j < 4; j++) {
+                    context3.strokeStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ',0,' +
+                        Math.floor(255 - 42.5 * j) + ')';
+                    context3.beginPath();
+                    context3.arc(375 + j * 25, 48 + i * 25, 10, 0, Math.PI * 2, true);
+                    context3.stroke();
+                }
+            }
+        }
+        draw1();
     </script>
 
 </body>
