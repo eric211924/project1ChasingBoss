@@ -224,7 +224,13 @@
             context2.clearRect(33, 180, 130, 110);
             context2.fillStyle = "black";
             context2.font = '120px Helvetica';
-            context2.fillText(Math.floor(time / 5), 33, 280);
+            // context2.fillText(Math.floor(time / 5), 33, 280);
+            if(Math.floor(time / 5)<10){
+                context2.fillText(Math.floor(time / 5), 65, 280);
+            }else{
+                context2.fillText(Math.floor(time / 5), 33, 280);
+            }
+            
 
             context3.clearRect(280, 37, 70, 50)
             context3.fillStyle = "black";
