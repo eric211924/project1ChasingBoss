@@ -108,6 +108,24 @@
         var imgObj4 = new Image();
         imgObj4.src = "img/lose.jpg";
 
+        window.onload = function () {//換玩家
+            canvas2.addEventListener("mousedown",function(f){
+
+                console.log(f.layerX);
+                console.log(f.layerY);
+            
+            if(f.layerX>45&&f.layerX<95&&f.layerY>380&&f.layerY<430){
+                console.log('123456');
+                imgObj.src = "img/lose.jpg";
+
+            }}
+            
+            
+            
+             , false);
+        }
+
+
 
         window.addEventListener('keydown', function (e) {
             console.log(e.keyCode);
@@ -225,12 +243,12 @@
             context2.fillStyle = "black";
             context2.font = '120px Helvetica';
             // context2.fillText(Math.floor(time / 5), 33, 280);
-            if(Math.floor(time / 5)<10){
+            if (Math.floor(time / 5) < 10) {
                 context2.fillText(Math.floor(time / 5), 65, 280);
-            }else{
+            } else {
                 context2.fillText(Math.floor(time / 5), 33, 280);
             }
-            
+
 
             context3.clearRect(280, 37, 70, 50)
             context3.fillStyle = "black";
@@ -362,14 +380,19 @@
                 }
             }
 
-            for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 5; j++) {
-                    context2.strokeStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ',' +
-                        Math.floor(255 - 42.5 * j) + ',0)';
-                    context2.beginPath();
-                    context2.arc(50 + j * 25, 380 + i * 25, 10, 0, Math.PI * 2, true);
-                    context2.stroke();
-                }
+            // for (var i = 0; i < 3; i++) {
+            //     for (var j = 0; j < 5; j++) {
+            //         context2.strokeStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ',' +
+            //             Math.floor(255 - 42.5 * j) + ',0)';
+            //         context2.beginPath();
+            //         context2.arc(50 + j * 25, 380 + i * 25, 10, 0, Math.PI * 2, true);
+            //         context2.stroke();
+            //     }
+            // }
+
+            imgObj3.onload = function () {
+                context2.drawImage(imgObj3, 45, 380, 50, 50);
+                context2.drawImage(imgObj4, 105, 380, 50, 50);
             }
         }
         draw();
@@ -378,6 +401,7 @@
 
         let canvas3 = document.querySelector('#myCanvas3');
         let context3 = canvas3.getContext('2d');
+
         context3.fillRect(10, 10, 480, 100);
         context3.clearRect(20, 20, 460, 80);
         context3.strokeRect(30, 30, 440, 60);
@@ -385,7 +409,7 @@
         context3.font = '36px Helvetica';
         context3.fillText('Time', 170, 75);
 
-        function draw1(){
+        function draw1() {
             for (var i = 0; i < 2; i++) {
                 for (var j = 0; j < 4; j++) {
                     context3.strokeStyle = 'rgb(0,' + Math.floor(255 - 42.5 * i) + ',' +
@@ -404,6 +428,8 @@
                     context3.stroke();
                 }
             }
+
+
         }
         draw1();
     </script>
