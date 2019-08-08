@@ -117,25 +117,14 @@
         var imgObj7 = new Image();
         imgObj7.src = "img/player3.jpg";
 
-        window.onload = function () { //換玩家頭像
-            canvas2.addEventListener("mousedown", function (f) {
-                console.log(f.layerX);
-                console.log(f.layerY);
-                if (f.layerX > 45 && f.layerX < 95 && f.layerY > 350 && f.layerY < 400) {
-                    imgObj.src = "img/player1.jpg";
-                }
-                if (f.layerX > 105 && f.layerX < 155 && f.layerY > 350 && f.layerY < 400) {
-                    imgObj.src = "img/player2.jpg";
-                }
-                if (f.layerX > 45 && f.layerX < 95 && f.layerY > 410 && f.layerY < 460) {
-                    imgObj.src = "img/player3.jpg";
-                }
-                if (f.layerX > 105 && f.layerX < 155 && f.layerY > 410 && f.layerY < 460) {
-                    imgObj.src = "img/player.jpg";
-                }
-                context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
-            }, false);
-        }
+
+
+        
+            
+        
+        
+    
+
 
         window.addEventListener('keydown', function (e) {
             console.log(e.keyCode);
@@ -241,7 +230,8 @@
 
             moveBoss();
 
-            if (player.X >= boss.X - 50 && player.X <= boss.X + 50 && player.Y >= boss.Y - 50 && player.Y <= boss.Y +
+            if (player.X >= boss.X - 50 && player.X <= boss.X + 50 && player.Y >= boss.Y - 50 && player.Y <=
+                boss.Y +
                 50) {
                 console.log('touch');
                 clearInterval(moving);
@@ -249,6 +239,7 @@
                 pageNum = 1;
             }
 
+            console.log('time' + time);
             context2.clearRect(33, 180, 130, 110);
             context2.fillStyle = "black";
             context2.font = '120px Helvetica';
@@ -259,17 +250,14 @@
                 context2.fillText(Math.floor(time / 5), 33, 280);
             }
 
-            window.onload = function(){
-                context3.clearRect(280, 37, 70, 50)
+
+            context3.clearRect(280, 37, 70, 50)
             context3.fillStyle = "black";
             context3.font = '60px Helvetica';
             context3.fillText(Math.floor(time / 5), 280, 80);
             time++;
 
-            }
 
-
-            
         }
 
 
@@ -288,10 +276,10 @@
                 context1.fillText('press Enter to continue', 128, 280);
                 context1.fillText('When Enemy status is           => Escape', 30, 380);
                 context1.fillText('When Enemy status is  Shy   => Approach', 30, 420);
-                imgObj1.onload = function () {
-                    context1.drawImage(imgObj1, 280, 400, 50, 50);
-                    context1.drawImage(imgObj2, 280, 340, 50, 50);
-                }
+
+                context1.drawImage(imgObj1, 280, 400, 50, 50);
+                context1.drawImage(imgObj2, 280, 340, 50, 50);
+
 
 
 
@@ -372,6 +360,7 @@
 
         var pageNum = 1;
         page(pageNum);
+
         //------------------------------------
         let canvas2 = document.querySelector('#myCanvas2');
         let context2 = canvas2.getContext('2d');
@@ -405,14 +394,35 @@
             //     }
             // }
 
-            imgObj5.onload = function () {
+            window.onload = function () {
                 context2.drawImage(imgObj5, 45, 350, 50, 50);
                 context2.drawImage(imgObj6, 105, 350, 50, 50);
                 context2.drawImage(imgObj7, 45, 410, 50, 50);
                 context2.drawImage(imgObj, 105, 410, 50, 50);
+
             }
+
         }
         draw();
+
+        //換玩家頭像
+        canvas2.addEventListener("mousedown", function (f) {
+            console.log(f.layerX);
+            console.log(f.layerY);
+            if (f.layerX > 45 && f.layerX < 95 && f.layerY > 350 && f.layerY < 400) {
+                imgObj.src = "img/player1.jpg";
+            }
+            if (f.layerX > 105 && f.layerX < 155 && f.layerY > 350 && f.layerY < 400) {
+                imgObj.src = "img/player2.jpg";
+            }
+            if (f.layerX > 45 && f.layerX < 95 && f.layerY > 410 && f.layerY < 460) {
+                imgObj.src = "img/player3.jpg";
+            }
+            if (f.layerX > 105 && f.layerX < 155 && f.layerY > 410 && f.layerY < 460) {
+                imgObj.src = "img/player.jpg";
+            }
+            context1.drawImage(imgObj, player.X, player.Y, player.length, player.length);
+        }, false);
 
         //---------------
         let canvas3 = document.querySelector('#myCanvas3');
